@@ -3,10 +3,19 @@
   "version": "1.0.0",
   "description": "A simple util to select a repository based of a Organization or User",
   "main": "dist/index.js",
+  "private": false,
   "bin": {
     "getrepo": "./dist/index.js"
   },
-  "files": ["./dist"],
+  "keywords": [
+    "arnat",
+    "cli",
+    "git",
+    "clone"
+  ],
+  "files": [
+    "./dist"
+  ],
   "scripts": {
     "start": "ts-node src/index.ts",
     "build": "tsc"

@@ -40,6 +40,7 @@ $ getrepo
 - [x] Search filter instead select repo
 - [x] namespace for deployment
 - [x] Export as bin
+- [ ] Add some screenshots & gifs
 
 ## Future Improves
 
