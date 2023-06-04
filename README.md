@@ -39,7 +39,7 @@ $ getrepo
 - [x] config: scan archived repos?
 - [x] Search filter instead select repo
 - [x] namespace for deployment
-- [] Export as bin
+- [x] Export as bin
 
 ## Future Improves
 
