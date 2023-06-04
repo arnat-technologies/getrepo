@@ -1,41 +1,80 @@
-import { Octokit } from "octokit"
-const { Select } = require('enquirer');
+import 'dotenv/config'
+
+import { execSync } from 'child_process'
+const { Select, prompt, Toggle, MultiSelect } = require('enquirer');
+const { request } = require("@octokit/request");
+import checkbox, { Separator } from '@inquirer/checkbox';
+
+let requestToUse = request;
+let urlToRequest: 'orgs' | 'users' = 'orgs'
+
+if (process.env.GITHUB_TOKEN) {
+    requestToUse = request.defaults({
+        headers: {
+            authorization: "token " + process.env.GITHUB_TOKEN,
+        },
+    });
+}
 
 (async function () {
-    const octokit = new Octokit({
-        auth: ''
-    })
+    const { username } = await prompt({
+        type: 'input',
+        name: 'username',
+        message: 'What is your Github org/user?'
+    });
+    // console.log('github profile', username);
 
-    let choices = await octokit.request('GET /users/rsurjano/repos', {
-        username: 'rsurjano',
+    let _config: any = await checkbox({
+        message: 'Customize some options',
+        choices: [
+            { name: 'Show archived repos?', value: 'showArchived' },
+            new Separator(),
+        ],
+    });
+    let config: any = {}
+    _config.forEach((item: any) => {
+        config[item] = true
+    })
+    // console.log(' config', config);
+
+    const isOrg = await new Toggle({
+        message: 'it is a Github Organization?',
+        enabled: 'Yep',
+        disabled: 'Nope'
+    }).run();
+    // console.log('isOrg', isOrg);
+    if (!isOrg) urlToRequest = 'users'
+    // console.log('urlToRequest', urlToRequest);
+
+
+    let choices = await requestToUse({
+        method: 'GET',
+        url: '/' + urlToRequest + '/' + username + ' /repos',
         headers: {
             'X-GitHub-Api-Version': '2022-11-28'
         }
     })
 
-    choices = choices.data;
-    const questions = []
-    choices = (choices as any).map((data: any) => {
+    choices = choices.data.map((data: any) => {
         return {
             name: data.full_name,
             archived: data.archived
         }
-    }).filter((data: any) => data.archived === false)
+    });
+    if (config.showArchived) choices = choices.filter((data: any) => data.archived === false)
 
-    const prompt = new Select({
-        name: 'github: rsurjano',
+    const select = new Select({
+        name: 'github: ' + urlToRequest + '/' + username,
         message: 'Select a repository',
         choices
     });
 
-    prompt.run()
+    select.run()
         .then((answer: any) => {
-
             const gitUrl = 'git@github.com:' + answer + '.git';
-            console.log('gitUrl', gitUrl);
+            console.log('@run:clone ' + gitUrl);
 
+            execSync('git clone ' + gitUrl)
         })
         .catch(console.error);
-
-
 })()
