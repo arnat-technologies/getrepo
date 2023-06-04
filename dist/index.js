@@ -76,7 +76,7 @@ if (process.env.GITHUB_TOKEN) {
         // console.log('isOrg', isOrg);
         if (!isOrg)
             urlToRequest = 'users';
-        console.log('urlToRequest', urlToRequest);
+        // console.log('urlToRequest', urlToRequest);
         let choices = yield requestToUse({
             method: 'GET',
             url: '/' + urlToRequest + '/' + username + '/repos',

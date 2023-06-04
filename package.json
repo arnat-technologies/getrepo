@@ -1,6 +1,6 @@
 {
   "name": "@arnat/getrepo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple util to select a repository based of a Organization or User",
   "main": "dist/index.js",
   "private": false,
