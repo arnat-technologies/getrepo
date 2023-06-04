@@ -1,7 +1,9 @@
+#!/usr/bin/env node
+
 import 'dotenv/config'
 
 import { execSync } from 'child_process'
-const { Select, prompt, Toggle, MultiSelect } = require('enquirer');
+const { AutoComplete, prompt, Toggle } = require('enquirer');
 const { request } = require("@octokit/request");
 import checkbox, { Separator } from '@inquirer/checkbox';
 
@@ -25,6 +27,7 @@ if (process.env.GITHUB_TOKEN) {
     // console.log('github profile', username);
 
     let _config: any = await checkbox({
+        instructions: false,
         message: 'Customize some options',
         choices: [
             { name: 'Show archived repos?', value: 'showArchived' },
@@ -49,7 +52,7 @@ if (process.env.GITHUB_TOKEN) {
 
     let choices = await requestToUse({
         method: 'GET',
-        url: '/' + urlToRequest + '/' + username + ' /repos',
+        url: '/' + urlToRequest + '/' + username + '/repos',
         headers: {
             'X-GitHub-Api-Version': '2022-11-28'
         }
@@ -61,11 +64,15 @@ if (process.env.GITHUB_TOKEN) {
             archived: data.archived
         }
     });
-    if (config.showArchived) choices = choices.filter((data: any) => data.archived === false)
+    // console.log('checking config showarchived', config);
+    
+    if (!config.showArchived) choices = choices.filter((data: any) => data.archived === false)
+    choices = choices.map((choice: any) => choice.name);
 
-    const select = new Select({
+
+    const select = new AutoComplete({
         name: 'github: ' + urlToRequest + '/' + username,
-        message: 'Select a repository',
+        message: 'Filter a repository',
         choices
     });
 

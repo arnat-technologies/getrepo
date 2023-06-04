@@ -1,33 +1,28 @@
-# CLI Select Repository
+# CLI Get Github Repository
 
-A simple util to select an unarchived repository based on an array of Organizations / Users, because it's more efficient just to select & clone an repo from the shell instead browsing.
+A simple util to select a repository based of a Organization / User, because it's more efficient just to select & clone a repository from the shell instead browsing.
 
 ## Features
 
 - Retrieve list of repositories of given org/user
-- Show a interactive CLI to select a repository
+- Show a interactive CLI to filter & select a repository
 - Clone selected repo into current folder
-- Initial Checklist for faster configuration
 
 ## Requirements
 
-- A Github Token
+- A Github Token(optional)
 - Git
 
 ## Installation
 
 ```shell
-$ npm install --global @arnat/select-repo
+$ npm install --global @arnat/getrepo
 ```
-
-## Configuration
-
-...
 
 ## How to use
 
 ```shell
-$ select-repo 
+$ getrepo 
 ```
 
 ## To-Do
@@ -42,4 +37,12 @@ $ select-repo
 - [x] Token Environment setting
 - [x] config: add dynamic
 - [x] config: scan archived repos?
-- [ ] Export as bin
+- [x] Search filter instead select repo
+- [x] namespace for deployment
+- [] Export as bin
+
+## Future Improves
+
+- [ ] Unit testing
+- [ ] Best practices
+- [ ] CLI improves by arguments

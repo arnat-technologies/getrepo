@@ -1,8 +1,12 @@
 {
-  "name": "select-repo",
+  "name": "@arnat/getrepo",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A simple util to select a repository based of a Organization or User",
+  "main": "dist/index.js",
+  "bin": {
+    "getrepo": "./dist/index.js"
+  },
+  "files": ["./dist"],
   "scripts": {
     "start": "ts-node src/index.ts",
     "build": "tsc"
