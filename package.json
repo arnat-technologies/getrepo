@@ -1,0 +1,17 @@
+{
+  "name": "select-repo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "enquirer": "^2.3.6",
+    "octokit": "^2.0.19",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.3"
+  }
+}
